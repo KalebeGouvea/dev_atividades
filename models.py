@@ -32,7 +32,7 @@ class Atividades(Base):
     id = Column(Integer, primary_key=True)
     nome = Column(String(80))
     pessoas_id = Column(Integer, ForeignKey('pessoas.id'))
-    pessoas = relationship('Pessoas')
+    pessoa = relationship('Pessoas')
 
     def __repr__(self):
         return '<Atividades: {}>'.format(self.nome)

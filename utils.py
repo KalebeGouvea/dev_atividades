@@ -2,7 +2,7 @@ from models import Pessoas
 
 #Insere dados na tabela pessoa
 def insere_pessoa():
-    pessoa = Pessoas(nome='Kalebe', idade=26)
+    pessoa = Pessoas(nome='Kalebe', idade=25)
     pessoa.save()
 
 #Consulta dados na tabela pessoa, todos ou individualmente
