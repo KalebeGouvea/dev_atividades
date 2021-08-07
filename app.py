@@ -1,12 +1,36 @@
 from flask import Flask, request
 from flask.wrappers import Response
 from flask_restful import Resource, Api
-from models import Atividades, Pessoas
+from models import Atividades, Pessoas, Usuarios
+from flask_httpauth import HTTPBasicAuth
 
+auth = HTTPBasicAuth()
 app = Flask(__name__)
 api = Api(app)
 
+# Autenticacao por Hard Code #
+"""
+usuarios = {
+    'admin':'admin',
+    'teste':'123'
+}
+
+@auth.verify_password
+def verificacao(login, senha):
+    if not (login, senha):
+        return False
+    return usuarios.get(login) == senha
+"""
+
+# Autenticacao por tabela no banco de dados #
+@auth.verify_password
+def verificacao(login, senha):
+    if not (login, senha):
+        return False
+    return Usuarios.query.filter_by(login=login, senha=senha).first()
+
 class Pessoa(Resource):
+    @auth.login_required
     def get(self, nome):
         pessoa = Pessoas.query.filter_by(nome=nome).first()
         try:
